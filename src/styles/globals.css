@@ -28,6 +28,12 @@ a {
   text-decoration: none;
 }
 
+input,
+textarea,
+select {
+  font-size: 16px; /* Prevents iOS zoom on focus */
+}
+
 html {
   color-scheme: dark;
 }

@@ -96,7 +96,7 @@ const Input = styled.input`
   background: ${({ theme }) => theme.backgroundAlt};
   border: 1px solid ${({ theme }) => theme.border};
   border-radius: 8px;
-  font-size: 0.95rem;
+  font-size: 16px;
   color: ${({ theme }) => theme.text};
   transition: border-color 0.15s ease;
 
@@ -115,7 +115,7 @@ const TextArea = styled.textarea`
   background: ${({ theme }) => theme.backgroundAlt};
   border: 1px solid ${({ theme }) => theme.border};
   border-radius: 8px;
-  font-size: 0.95rem;
+  font-size: 16px;
   color: ${({ theme }) => theme.text};
   resize: vertical;
   min-height: 80px;
