@@ -4,7 +4,7 @@ import Splash from "@/components/Splash";
 import { useUser } from "@/contexts/UserContext";
 
 // App configuration - customize these
-const APP_NAME = "App Block";
+const APP_NAME = "Linked";
 
 export const getServerSideProps = async () => {
   return {

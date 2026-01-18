@@ -26,6 +26,7 @@ const Main = styled.main`
   flex: 1;
   display: flex;
   flex-direction: column;
+  background: ${({ theme }) => theme.background};
 `;
 
 const Header = styled.div`
@@ -143,12 +144,12 @@ const PageSubtitle = styled.p`
 const AddButton = styled.button`
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.75rem 1.25rem;
+  gap: 0.4rem;
+  padding: 0.5rem 1rem;
   background: ${({ theme }) => theme.accent};
   border: none;
-  border-radius: 8px;
-  font-size: 0.9rem;
+  border-radius: 6px;
+  font-size: 0.8rem;
   font-weight: 600;
   color: white;
   cursor: pointer;
@@ -156,23 +157,22 @@ const AddButton = styled.button`
 
   &:hover {
     background: ${({ theme }) => theme.accentHover};
-    transform: translateY(-1px);
   }
 `;
 
 const StatsBar = styled.div`
   display: flex;
-  gap: 1.5rem;
+  gap: 1rem;
   margin-bottom: 2rem;
-  flex-wrap: wrap;
 `;
 
 const StatCard = styled.div`
+  flex: 1;
   background: ${({ theme }) => theme.surface};
   border: 1px solid ${({ theme }) => theme.border};
   border-radius: 8px;
   padding: 1rem 1.25rem;
-  min-width: 120px;
+  text-align: center;
 `;
 
 const StatValue = styled.div`
@@ -518,6 +518,10 @@ const DashboardPage: React.FC = () => {
             <UserName>{displayName}</UserName>
           </UserSection>
           <HeaderRight>
+            <AddButton onClick={handleAddLink}>
+              <span>+</span>
+              Add Link
+            </AddButton>
             {!isRenaissanceUser && (
               <LogoutButton onClick={handleLogout}>
                 Sign Out
@@ -536,10 +540,6 @@ const DashboardPage: React.FC = () => {
                 Manage and share your important links
               </PageSubtitle>
             </div>
-            <AddButton onClick={handleAddLink}>
-              <span>+</span>
-              Add Link
-            </AddButton>
           </PageHeader>
 
           <StatsBar>

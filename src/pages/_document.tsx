@@ -40,7 +40,9 @@ export default class MyDocument extends Document {
   render() {
     return (
       <Html lang="en">
-        <Head />
+        <Head>
+          <style>{`body { background-color: #0B0B0D; }`}</style>
+        </Head>
         <body>
           <Main />
           <NextScript />

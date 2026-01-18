@@ -241,7 +241,7 @@ const Splash: React.FC<SplashProps> = ({
   user, 
   isLoading = false, 
   redirectDelay = 1000,
-  appName = 'App Block',
+  appName = 'Linked',
   onNotAuthenticated,
 }) => {
   const router = useRouter();
@@ -289,7 +289,7 @@ const Splash: React.FC<SplashProps> = ({
       <ContentWrapper>
         <LogoSection>
           <Logo>{appName}</Logo>
-          <LogoAccent>App Block Template</LogoAccent>
+          <LogoAccent>Your Links, One Page</LogoAccent>
         </LogoSection>
         
         <ProfileArea>
@@ -300,8 +300,8 @@ const Splash: React.FC<SplashProps> = ({
                 <VoidCore />
               </VoidSymbol>
               <TextGroup>
-                <WelcomeText>Welcome</WelcomeText>
-                <SubText $animate>Verifying...</SubText>
+                <WelcomeText>Welcome to Linked</WelcomeText>
+                <SubText $animate>Loading your links...</SubText>
               </TextGroup>
             </ProfileContent>
           )}
@@ -313,8 +313,8 @@ const Splash: React.FC<SplashProps> = ({
                 <VoidCore />
               </VoidSymbol>
               <TextGroup>
-                <WelcomeText>Welcome</WelcomeText>
-                <SubText>Sign in to continue</SubText>
+                <WelcomeText>Welcome to Linked</WelcomeText>
+                <SubText>Sign in to manage your links</SubText>
               </TextGroup>
               <ActionButton onClick={handleLogin}>
                 Sign In
@@ -337,8 +337,8 @@ const Splash: React.FC<SplashProps> = ({
                 )}
               </AvatarContainer>
               <TextGroup>
-                <WelcomeText>{displayName}</WelcomeText>
-                <SubText $animate>Entering...</SubText>
+                <WelcomeText>Welcome back, {displayName}</WelcomeText>
+                <SubText $animate>Opening your dashboard...</SubText>
               </TextGroup>
             </ProfileContent>
           )}

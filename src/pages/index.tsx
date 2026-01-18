@@ -4,9 +4,9 @@ import Link from "next/link";
 import styled, { keyframes, css } from "styled-components";
 
 // App configuration - customize these
-const APP_NAME = "App Block";
-const APP_TAGLINE = "App Block Template";
-const APP_DESCRIPTION = "A starting point for building apps.";
+const APP_NAME = "Linked";
+const APP_TAGLINE = "Your Links, One Page";
+const APP_DESCRIPTION = "Share all your important links in one beautiful, customizable page.";
 
 // Animations
 const fadeUp = keyframes`
@@ -291,26 +291,26 @@ const HomePage: React.FC = () => {
 
           <FeatureSection $delay={delays.features}>
             <FeatureItem $delay={delays.feature1}>
-              <FeatureIcon>🔐</FeatureIcon>
+              <FeatureIcon>🔗</FeatureIcon>
               <FeatureInfo>
-                <FeatureTitle>Authentication Built-in</FeatureTitle>
-                <FeatureLabel>Phone + PIN login system</FeatureLabel>
+                <FeatureTitle>All Your Links</FeatureTitle>
+                <FeatureLabel>One shareable page</FeatureLabel>
               </FeatureInfo>
             </FeatureItem>
 
             <FeatureItem $delay={delays.feature2}>
-              <FeatureIcon>🎨</FeatureIcon>
+              <FeatureIcon>✨</FeatureIcon>
               <FeatureInfo>
-                <FeatureTitle>Dark Theme Ready</FeatureTitle>
-                <FeatureLabel>Styled components included</FeatureLabel>
+                <FeatureTitle>Custom Profile</FeatureTitle>
+                <FeatureLabel>Your username, your brand</FeatureLabel>
               </FeatureInfo>
             </FeatureItem>
 
             <FeatureItem $delay={delays.feature3}>
-              <FeatureIcon>⚡</FeatureIcon>
+              <FeatureIcon>📊</FeatureIcon>
               <FeatureInfo>
-                <FeatureTitle>Database Ready</FeatureTitle>
-                <FeatureLabel>Drizzle + Turso configured</FeatureLabel>
+                <FeatureTitle>Track Clicks</FeatureTitle>
+                <FeatureLabel>See what resonates</FeatureLabel>
               </FeatureInfo>
             </FeatureItem>
           </FeatureSection>
@@ -319,7 +319,7 @@ const HomePage: React.FC = () => {
             <EnterButton href="/app" $active={ctaActive}>
               Get Started
             </EnterButton>
-            <CTAMicrocopy>Authenticated with the Renaissance City app</CTAMicrocopy>
+            <CTAMicrocopy>Create your link page in seconds</CTAMicrocopy>
           </CTASection>
 
           <FooterRow $delay={delays.footer}>
