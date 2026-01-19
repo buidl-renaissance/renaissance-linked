@@ -4,6 +4,8 @@ import Head from 'next/head';
 import styled, { keyframes } from 'styled-components';
 import { getUserByUsername } from '@/db/user';
 import { getPublicLinksByUserId, Link } from '@/db/links';
+import { recordProfileView } from '@/db/analytics';
+import { extractAnalyticsMetadata } from '@/utils/analytics';
 
 const APP_NAME = 'Linked';
 
@@ -402,6 +404,7 @@ export const getServerSideProps: GetServerSideProps<PublicProfilePageProps> = as
   context
 ) => {
   const { username } = context.params as { username: string };
+  const { req } = context;
 
   // Reserved paths that shouldn't be treated as usernames
   const reservedPaths = [
@@ -409,6 +412,7 @@ export const getServerSideProps: GetServerSideProps<PublicProfilePageProps> = as
     'login',
     'register',
     'dashboard',
+    'analytics',
     'api',
     'go',
     '_next',
@@ -432,6 +436,15 @@ export const getServerSideProps: GetServerSideProps<PublicProfilePageProps> = as
         },
       };
     }
+
+    // Extract analytics metadata and record profile view
+    const headers = req.headers as Record<string, string | string[] | undefined>;
+    const metadata = await extractAnalyticsMetadata(headers);
+    
+    // Record profile view (don't await - let it run async to not block page load)
+    recordProfileView(user.id, metadata).catch((err) => {
+      console.error('Error recording profile view:', err);
+    });
 
     // Get public links
     const userLinks = await getPublicLinksByUserId(user.id);

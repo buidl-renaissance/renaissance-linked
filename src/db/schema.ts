@@ -45,3 +45,39 @@ export const links = sqliteTable('links', {
   createdAt: integer('createdAt', { mode: 'timestamp' }).default(sql`(strftime('%s', 'now'))`).notNull(),
   updatedAt: integer('updatedAt', { mode: 'timestamp' }).default(sql`(strftime('%s', 'now'))`).notNull(),
 });
+
+// Device types for analytics
+export const DEVICE_TYPES = ['desktop', 'mobile', 'tablet', 'unknown'] as const;
+export type DeviceType = typeof DEVICE_TYPES[number];
+
+// Link clicks table for detailed analytics
+export const linkClicks = sqliteTable('link_clicks', {
+  id: text('id').primaryKey(),
+  linkId: text('linkId').notNull().references(() => links.id, { onDelete: 'cascade' }),
+  clickedAt: integer('clickedAt', { mode: 'timestamp' }).default(sql`(strftime('%s', 'now'))`).notNull(),
+  ipAddress: text('ipAddress'), // For geo lookup (consider hashing for privacy)
+  country: text('country'), // Derived from IP
+  city: text('city'), // Derived from IP
+  userAgent: text('userAgent'), // Raw user agent string
+  deviceType: text('deviceType').$type<DeviceType>().default('unknown'), // mobile/desktop/tablet
+  browser: text('browser'), // Chrome/Safari/Firefox etc
+  os: text('os'), // iOS/Android/Windows etc
+  referrer: text('referrer'), // Full referrer URL
+  referrerDomain: text('referrerDomain'), // Extracted domain from referrer
+});
+
+// Profile views table for tracking profile page visits
+export const profileViews = sqliteTable('profile_views', {
+  id: text('id').primaryKey(),
+  userId: text('userId').notNull().references(() => users.id, { onDelete: 'cascade' }),
+  viewedAt: integer('viewedAt', { mode: 'timestamp' }).default(sql`(strftime('%s', 'now'))`).notNull(),
+  ipAddress: text('ipAddress'), // For geo lookup
+  country: text('country'), // Derived from IP
+  city: text('city'), // Derived from IP
+  userAgent: text('userAgent'), // Raw user agent string
+  deviceType: text('deviceType').$type<DeviceType>().default('unknown'), // mobile/desktop/tablet
+  browser: text('browser'), // Chrome/Safari/Firefox etc
+  os: text('os'), // iOS/Android/Windows etc
+  referrer: text('referrer'), // Full referrer URL
+  referrerDomain: text('referrerDomain'), // Extracted domain from referrer
+});

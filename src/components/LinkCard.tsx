@@ -326,6 +326,7 @@ interface LinkCardProps {
   link: LinkCardData;
   onEdit?: (link: LinkCardData) => void;
   onDelete?: (linkId: string) => void;
+  onAnalytics?: (linkId: string) => void;
   onClick?: (link: LinkCardData) => void;
   showActions?: boolean;
   isDragging?: boolean;
@@ -335,6 +336,7 @@ export const LinkCard: React.FC<LinkCardProps> = ({
   link,
   onEdit,
   onDelete,
+  onAnalytics,
   onClick,
   showActions = true,
   isDragging = false,
@@ -365,7 +367,13 @@ export const LinkCard: React.FC<LinkCardProps> = ({
     // Don't trigger if clicking on action buttons
     if ((e.target as HTMLElement).closest('button')) return;
     if ((e.target as HTMLElement).closest('[data-menu]')) return;
-    onClick?.(link);
+    
+    // If onAnalytics is provided, navigate to analytics; otherwise use onClick
+    if (onAnalytics) {
+      onAnalytics(link.id);
+    } else {
+      onClick?.(link);
+    }
   };
 
   const handleShare = async () => {
@@ -468,6 +476,13 @@ export const LinkCard: React.FC<LinkCardProps> = ({
                 More
               </MenuButton>
               <DropdownMenu $isOpen={menuOpen}>
+                <DropdownItem onClick={() => {
+                  setMenuOpen(false);
+                  onAnalytics?.(link.id);
+                }}>
+                  <span>📊</span>
+                  Analytics
+                </DropdownItem>
                 <DropdownItem onClick={() => {
                   setMenuOpen(false);
                   onEdit?.(link);

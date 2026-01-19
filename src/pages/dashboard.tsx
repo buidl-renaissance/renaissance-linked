@@ -105,6 +105,27 @@ const LogoutButton = styled.button`
   }
 `;
 
+const AnalyticsButton = styled.button`
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1rem;
+  background: transparent;
+  border: 1px solid ${({ theme }) => theme.border};
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: ${({ theme }) => theme.textMuted};
+  cursor: pointer;
+  transition: all 0.15s ease;
+
+  &:hover {
+    border-color: ${({ theme }) => theme.accent};
+    color: ${({ theme }) => theme.accent};
+    background: ${({ theme }) => theme.accentMuted};
+  }
+`;
+
 const HeaderSpacer = styled.div`
   height: 60px;
 `;
@@ -518,6 +539,10 @@ const DashboardPage: React.FC = () => {
             <UserName>{displayName}</UserName>
           </UserSection>
           <HeaderRight>
+            <AnalyticsButton onClick={() => router.push('/analytics')}>
+              <span>📊</span>
+              Analytics
+            </AnalyticsButton>
             <AddButton onClick={handleAddLink}>
               <span>+</span>
               Add Link
@@ -589,6 +614,7 @@ const DashboardPage: React.FC = () => {
                   link={link}
                   onEdit={handleEditLink}
                   onDelete={(id) => setDeleteConfirm(id)}
+                  onAnalytics={(id) => router.push(`/analytics/link/${id}`)}
                 />
               ))}
             </LinksGrid>

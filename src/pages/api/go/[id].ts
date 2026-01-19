@@ -1,5 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { getLinkById, incrementLinkClicks } from '@/db/links';
+import { recordLinkClick } from '@/db/analytics';
+import { extractAnalyticsMetadata } from '@/utils/analytics';
 
 /**
  * Link Redirect API
@@ -27,8 +29,15 @@ export default async function handler(
       return res.status(404).json({ error: 'Link not found' });
     }
 
-    // Increment click counter
-    await incrementLinkClicks(id);
+    // Extract analytics metadata from request headers
+    const headers = req.headers as Record<string, string | string[] | undefined>;
+    const metadata = await extractAnalyticsMetadata(headers);
+
+    // Record detailed click event and increment simple counter
+    await Promise.all([
+      recordLinkClick(id, metadata),
+      incrementLinkClicks(id),
+    ]);
 
     // Redirect to the actual URL
     return res.redirect(302, link.url);
