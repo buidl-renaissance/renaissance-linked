@@ -376,11 +376,20 @@ export const LinkCard: React.FC<LinkCardProps> = ({
     }
   };
 
+  // Get the tracked URL that goes through /go/[id] for analytics
+  const getTrackedUrl = () => {
+    if (typeof window !== 'undefined') {
+      return `${window.location.origin}/go/${link.id}`;
+    }
+    return `/go/${link.id}`;
+  };
+
   const handleShare = async () => {
+    const trackedUrl = getTrackedUrl();
     const shareData = {
       title: link.title || 'Check out this link',
       text: link.description || '',
-      url: link.url,
+      url: trackedUrl,
     };
 
     if (navigator.share) {
@@ -392,7 +401,7 @@ export const LinkCard: React.FC<LinkCardProps> = ({
       }
     } else {
       // Fallback: copy to clipboard
-      await navigator.clipboard.writeText(link.url);
+      await navigator.clipboard.writeText(trackedUrl);
       alert('Link copied to clipboard!');
     }
   };
@@ -401,8 +410,9 @@ export const LinkCard: React.FC<LinkCardProps> = ({
     setQrModalOpen(true);
   };
 
-  const getQRCodeUrl = (url: string) => {
-    const encodedUrl = encodeURIComponent(url);
+  const getQRCodeUrl = () => {
+    const trackedUrl = getTrackedUrl();
+    const encodedUrl = encodeURIComponent(trackedUrl);
     return `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodedUrl}&bgcolor=ffffff&color=000000&margin=10`;
   };
 
@@ -510,10 +520,10 @@ export const LinkCard: React.FC<LinkCardProps> = ({
         <ModalOverlay onClick={() => setQrModalOpen(false)}>
           <ModalContent onClick={(e) => e.stopPropagation()}>
             <ModalTitle>{link.title || 'QR Code'}</ModalTitle>
-            <ModalSubtitle>{link.url}</ModalSubtitle>
+            <ModalSubtitle>{getTrackedUrl()}</ModalSubtitle>
             <QRCodeContainer>
               <QRCodeImage 
-                src={getQRCodeUrl(link.url)} 
+                src={getQRCodeUrl()} 
                 alt="QR Code"
               />
             </QRCodeContainer>
